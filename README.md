@@ -1,4 +1,4 @@
-# Consistent Hashing (Go)
+# Consistent Hashing
 
 A minimal Go implementation of **consistent hashing** with virtual nodes for distributed load balancing and data partitioning. It routes requests to servers while minimizing key movement when servers are added or removed.
 
@@ -6,12 +6,22 @@ A minimal Go implementation of **consistent hashing** with virtual nodes for dis
 
 ## Features
 
-* Consistent hashing with **virtual nodes** (replicas)
-* **O(log n)** request routing via binary search
-* Minimal key redistribution on topology changes
-* Simple, idiomatic Go API
+- Consistent hashing with **virtual nodes** (replicas)
+- **O(log n)** request routing via binary search
+- Minimal key redistribution on topology changes
+- Simple, idiomatic Go API
 
 ---
+
+## Consistent Hashing
+
+<img src="assets/consistent_hashing.png" alt="alt text" width="600" height="350">
+
+---
+
+## Virtual Nodes
+
+<img src="assets/virtual_servers.png" alt="alt text" width="600" height="350">
 
 ## Quick Start
 
@@ -35,7 +45,7 @@ fmt.Println("Route to:", server)
 
 Creates a new hash ring.
 
-* `replicas`: virtual nodes per server (typical: 100–200)
+- `replicas`: virtual nodes per server (typical: 100–200)
 
 ---
 
@@ -73,10 +83,10 @@ Returns an empty string if the ring is empty.
 
 ## How It Works (Brief)
 
-* Both servers and keys are hashed into the same 32-bit space
-* Servers are placed on a **ring** using multiple virtual nodes
-* A key is assigned to the **next server clockwise** on the ring
-* Adding/removing a server only affects nearby keys (~1/n)
+- Both servers and keys are hashed into the same 32-bit space
+- Servers are placed on a **ring** using multiple virtual nodes
+- A key is assigned to the **next server clockwise** on the ring
+- Adding/removing a server only affects nearby keys (~1/n)
 
 ---
 
@@ -100,8 +110,8 @@ type HashRing struct {
 | RemoveServer     | O(k + r)   |
 | GetNearestServer | O(log r)   |
 
-* `k` = replicas per server
-* `r` = total virtual nodes
+- `k` = replicas per server
+- `r` = total virtual nodes
 
 Space: **O(n · k)**
 
@@ -109,21 +119,6 @@ Space: **O(n · k)**
 
 ## Hash Function
 
-* Uses Go’s `hash/crc32`
-* Fast and well-distributed
-* Suitable for consistent hashing (non-cryptographic)
-
----
-
-## Notes
-
-* All clients must use the **same hash function**
-* Server IDs must be **stable and consistent**
-* Topology changes should be coordinated in distributed setups
-
----
-
-## References
-
-* Karger et al., *Consistent Hashing and Random Trees* (1997)
-* Go standard library: `hash/crc32`
+- Uses Go’s `hash/crc32`
+- Fast and well-distributed
+- Suitable for consistent hashing (non-cryptographic)
