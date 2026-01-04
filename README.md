@@ -25,6 +25,8 @@ A minimal Go implementation of **consistent hashing** with virtual nodes for dis
 
 ## Quick Start
 
+<img src="assets/output.png" alt="alt text" width="600" height="500">
+
 ```go
 // Create a ring with 100 virtual nodes per server
 ring := NewHashRing(100)
